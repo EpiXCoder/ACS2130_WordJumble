@@ -1,5 +1,6 @@
-
-def solve_jumble(jumble):
+# Part 1
+# Unscramble the words
+def unscramble(jumble):
     # Read the dictionary file into a set
     with open('words2', 'r') as f:
         dictionary = set([word.strip().lower() for word in f])
@@ -22,9 +23,9 @@ def solve_jumble(jumble):
     
     return valid_words
 
-
+#pick out letters to be used in the final word using indices
 def final_letters():
-    valid_word_lists = [solve_jumble(jumble) for jumble in jumbles]
+    valid_word_lists = [unscramble(jumble) for jumble in jumbles]
     # valid_word_lists = [['often'], ['kiosk'], ['immune'], ['cousin']]
     letters_array = []
 
@@ -35,16 +36,19 @@ def final_letters():
     # print(letters_array)
     return letters_array
 
-
+# Part 2
+# Using the letters, create valid word pairs
 def create_word_pairs():
     letters_array = final_letters()
     word_pairs = []
     with open('words2', 'r') as file:
         word_list = [line.strip().lower() for line in file]
-
+    
+    # Get a list of two letter words and 6 letter valid words using the letters
     two_letter_words = [word for word in word_list if len(word) == 2]
     six_letter_words = [word for word in word_list if len(word) == 6]
 
+    # Pair up the words
     for word1 in two_letter_words:
         for word2 in six_letter_words:
             if sorted(list(word1 + word2)) == sorted(letters_array):
@@ -54,7 +58,7 @@ def create_word_pairs():
 
 
 
-def answer():
+def jumble_solution():
     result = create_word_pairs()
 
 # Print the resulting word pairs
@@ -64,4 +68,4 @@ def answer():
 # Define the jumbles and indices
 jumbles = ['tefon', 'sokik', 'niumem', 'siconu']
 indices = [[2, 4], [0, 1, 3], [4], [3, 4]]
-answer()
+jumble_solution()
